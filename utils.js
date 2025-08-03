@@ -59,6 +59,23 @@ const Utils = {
     // 生成随机ID
     generateId() {
         return Math.random().toString(36).substr(2, 9);
+    },
+
+    // 格式化货币
+    formatCurrency(amount, currency = 'CNY') {
+        return new Intl.NumberFormat('zh-CN', {
+            style: 'currency',
+            currency: currency
+        }).format(amount);
+    },
+
+    // 计算数组平均值
+    calculateAverage(numbers) {
+        if (!Array.isArray(numbers) || numbers.length === 0) {
+            return 0;
+        }
+        const sum = numbers.reduce((acc, num) => acc + num, 0);
+        return sum / numbers.length;
     }
 };
 

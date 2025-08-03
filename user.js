@@ -84,6 +84,28 @@ class UserManager {
             oldestUser: this.users[0]
         };
     }
+
+    // 更新用户最后活跃时间
+    updateLastActive(userId) {
+        const user = this.findUser(userId);
+        if (!user) {
+            throw new Error('用户不存在');
+        }
+
+        user.lastActiveAt = new Date();
+        console.log(`用户 ${user.name} 活跃时间已更新`);
+        return user;
+    }
+
+    // 获取活跃用户列表（最近7天）
+    getActiveUsers() {
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+        return this.users.filter(user =>
+            user.lastActiveAt && user.lastActiveAt > sevenDaysAgo
+        );
+    }
 }
 
 module.exports = UserManager; 
