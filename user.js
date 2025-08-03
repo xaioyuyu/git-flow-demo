@@ -63,6 +63,27 @@ class UserManager {
             this.currentUser = null;
         }
     }
+
+    // 删除用户
+    deleteUser(id) {
+        const userIndex = this.users.findIndex(user => user.id === id);
+        if (userIndex === -1) {
+            throw new Error('用户不存在');
+        }
+
+        const deletedUser = this.users.splice(userIndex, 1)[0];
+        console.log(`用户 ${deletedUser.name} 已被删除`);
+        return deletedUser;
+    }
+
+    // 获取用户统计信息
+    getUserStats() {
+        return {
+            totalUsers: this.users.length,
+            latestUser: this.users[this.users.length - 1],
+            oldestUser: this.users[0]
+        };
+    }
 }
 
 module.exports = UserManager; 

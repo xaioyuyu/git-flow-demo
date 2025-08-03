@@ -22,6 +22,39 @@ const Utils = {
             clearTimeout(timeout);
             timeout = setTimeout(later, wait);
         };
+    },
+
+    // 节流函数
+    throttle(func, limit) {
+        let inThrottle;
+        return function (...args) {
+            if (!inThrottle) {
+                func.apply(this, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    },
+
+    // 深度克隆对象
+    deepClone(obj) {
+        if (obj === null || typeof obj !== 'object') return obj;
+        if (obj instanceof Date) return new Date(obj.getTime());
+        if (obj instanceof Array) return obj.map(item => this.deepClone(item));
+        if (typeof obj === 'object') {
+            const clonedObj = {};
+            for (let key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    clonedObj[key] = this.deepClone(obj[key]);
+                }
+            }
+            return clonedObj;
+        }
+    },
+
+    // 生成随机ID
+    generateId() {
+        return Math.random().toString(36).substr(2, 9);
     }
 };
 
