@@ -76,6 +76,24 @@ const Utils = {
         }
         const sum = numbers.reduce((acc, num) => acc + num, 0);
         return sum / numbers.length;
+    },
+
+    // 验证产品数据
+    validateProduct(product) {
+        const errors = [];
+
+        if (!product.name || product.name.trim().length === 0) {
+            errors.push('产品名称不能为空');
+        }
+
+        if (!product.price || isNaN(product.price) || product.price <= 0) {
+            errors.push('产品价格必须是大于0的数字');
+        }
+
+        return {
+            isValid: errors.length === 0,
+            errors: errors
+        };
     }
 };
 
